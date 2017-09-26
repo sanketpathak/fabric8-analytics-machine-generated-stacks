@@ -1,5 +1,5 @@
 REGISTRY?=registry.devshift.net
-REPOSITORY?=fabric8-machine-generated-stacks
+REPOSITORY?=fabric8-analytics-machine-generated-stacks
 DEFAULT_TAG=latest
 
 .PHONY: all docker-build fast-docker-build test get-image-name get-image-repository

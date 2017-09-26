@@ -1,1 +1,1 @@
-# fabric8-machine-generated-stacks
+# fabric8-analytics-machine-generated-stacks

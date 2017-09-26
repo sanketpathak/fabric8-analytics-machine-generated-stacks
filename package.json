@@ -7,13 +7,13 @@
       "email": "asrisail@redhat.com"
     }
   ],
-  "homepage": "https://github.com/fabric8-analytics/fabric8-machine-generated-stacks",
+  "homepage": "https://github.com/fabric8-analytics/fabric8-analytics-machine-generated-stacks",
   "repository": {
     "type": "git",
-    "url": "https://github.com/fabric8-analytics/fabric8-machine-generated-stacks.git"
+    "url": "https://github.com/fabric8-analytics/fabric8-analytics-machine-generated-stacks.git"
   },
   "bugs": {
-    "url": "https://github.com/fabric8-analytics/fabric8-machine-generated-stacks/issues"
+    "url": "https://github.com/fabric8-analytics/fabric8-analytics-machine-generated-stacks/issues"
   },
   "license": "MIT",
   "angular-cli": {},
