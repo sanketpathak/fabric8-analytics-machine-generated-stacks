@@ -21,12 +21,15 @@ export class ProjectGenerationComponent implements OnInit {
             options: [{
                 name: 'group',
                 displayName: 'Group',
+                placeholder: 'com.example.project'
             }, {
                 name: 'artifactId',
-                displayName: 'Artifact Id'
+                displayName: 'Artifact Id',
+                placeholder: 'commons-example'
             }, {
                 name: 'groupVersion',
-                displayName: 'Project Version'
+                displayName: 'Project Version',
+                placeholder: '1.0.0'
             }],
             frameworks: [{
                 name: 'springboot',

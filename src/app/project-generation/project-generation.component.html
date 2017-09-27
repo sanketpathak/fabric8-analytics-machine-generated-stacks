@@ -47,13 +47,13 @@
                 <div class="group-information">
                     <span class="group-label col-xs-4">Project Name</span>
                     <span class="group-input col-xs-8">
-                        <input type="text" value="" [(ngModel)]="stack.name" />
+                        <input type="text" value="" placeholder="Example Project" [(ngModel)]="stack.name" />
                     </span>
                 </div>
                 <div class="group-information">
                     <span class="group-label col-xs-4">Project Description</span>
                     <span class="group-input col-xs-8">
-                        <textarea [(ngModel)]="stack.description"></textarea>
+                        <textarea placeholder="Sample Description" [(ngModel)]="stack.description"></textarea>
                     </span>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                     <div class="group-information" *ngFor="let option of packs[stack.ecosystem].options">
                         <span class="group-label col-xs-4">{{option.displayName}}</span>
                         <span class="group-input col-xs-8">
-                            <input type="text" value="" [(ngModel)]="stack[option.displayName]" />
+                            <input type="text" value="" [placeholder]="option.placeholder" [(ngModel)]="stack[option.displayName]" />
                         </span>
                     </div>
                 </div>
@@ -74,7 +74,6 @@
         <div class="step-info-container">
             <div class="step-information col-xs-6">
                 <h4>Dependencies</h4>
-                <p>Type and select dependencies</p>
                 <div class="group-information">
                     <typeahead-dependency (onTypeAhead)="handleSearch($event)"></typeahead-dependency>
                 </div>
