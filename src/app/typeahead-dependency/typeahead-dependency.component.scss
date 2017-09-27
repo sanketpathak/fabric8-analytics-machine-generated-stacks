@@ -1,0 +1,30 @@
+$patternfly-blue: #39a5dc;
+$white: #fff;
+
+.typeahead-dependency {
+    .form-control {
+        width: 90%;
+    }
+    .typeahead-input {
+        &:after {
+            content: '';
+            float: none;
+            clear: both;
+            display: block;
+        }
+    }
+    .suggestions {
+        background: #fff;
+
+        & > div {
+            padding: 10px;
+            &:hover, &.clicked-suggestion {
+                background: $patternfly-blue;
+                color: $white;
+            }
+        }
+    }
+}
+.float-left {
+    float: left;
+}

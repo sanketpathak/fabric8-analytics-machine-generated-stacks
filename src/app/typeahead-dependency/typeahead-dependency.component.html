@@ -1,0 +1,12 @@
+<section class="typeahead-dependency">
+    <div class="search-pf-input-group typeahead-input">
+        <input [(ngModel)]="userSearch" (keyup)="handleSearch()" type="search" class="form-control float-left" placeholder="Search">
+        <button class="btn btn-default float-left" type="button"><span class="fa fa-search"></span></button>
+    </div>
+    <div *ngIf="suggestions && suggestions.length > 0 || isLoading" class="suggestions">
+        <div *ngIf="isLoading" class="spinner"></div>
+        <div #sug (click)="handleSuggestionClick(suggestion, sug)" *ngFor="let suggestion of suggestions">
+            {{suggestion}}
+        </div>
+    </div>
+</section>

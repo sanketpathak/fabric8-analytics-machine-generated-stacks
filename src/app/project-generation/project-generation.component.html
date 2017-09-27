@@ -1,0 +1,90 @@
+<nav class="navbar navbar-default navbar-pf custom-header" role="navigation">
+  <div class="navbar-header"></div>
+</nav>
+
+<section class="project-generation">
+    <h1>{{header}}</h1>
+    <div class="steps">
+        <h3>Step 1:</h3>
+        <div class="step-info-container">
+            <div class="step-information col-xs-4">
+                <div class="group-information">
+                    <span class="group-label col-xs-4">Generate</span>
+                    <span class="group-input col-xs-8">
+                        <select (change)="onManifestChange()" [(ngModel)]="stack.ecosystem">
+                            <option [attr.selected]="stack.ecosystem === manifest" *ngFor="let manifest of manifests" [value]="manifest" [innerHTML]="packs[manifest].displayName"></option>
+                        </select>
+                    </span>
+                </div>
+            </div>
+            <div *ngIf="currentFrameworks && currentFrameworks.length > 0" class="step-information col-xs-4">
+                <div class="group-information">
+                    <span class="group-label col-xs-4">using</span>
+                    <span class="group-input col-xs-8">
+                        <select (change)="onFrameworkChange()" [(ngModel)]="stack.framework">
+                            <option [attr.selected]="stack.framework === framework.name" *ngFor="let framework of currentFrameworks" [value]="framework.name" [innerHTML]="framework.displayName"></option>
+                        </select>
+                    </span>
+                </div>
+            </div>
+            <div *ngIf="currentVersions && currentVersions.length > 0" class="step-information col-xs-4">
+                <div class="group-information">
+                    <span class="group-label col-xs-4">with</span>
+                    <span class="group-input col-xs-8">
+                        <select (change)="onVersionChange()" [(ngModel)]="stack.version">
+                            <option [attr.selected]="stack.version === version" *ngFor="let version of currentVersions" [value]="version" [innerHTML]="version"></option>
+                        </select>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="steps">
+        <h3>Step 2:</h3>
+        <div class="step-info-container">
+            <h4>Metadata information</h4>
+            <div class="step-information col-xs-6">
+                <div class="group-information">
+                    <span class="group-label col-xs-4">Project Name</span>
+                    <span class="group-input col-xs-8">
+                        <input type="text" value="" [(ngModel)]="stack.name" />
+                    </span>
+                </div>
+                <div class="group-information">
+                    <span class="group-label col-xs-4">Project Description</span>
+                    <span class="group-input col-xs-8">
+                        <textarea [(ngModel)]="stack.description"></textarea>
+                    </span>
+                </div>
+            </div>
+            <div class="step-information col-xs-6">
+                <div *ngIf="packs[stack.ecosystem].options && packs[stack.ecosystem].options.length > 0">
+                    <div class="group-information" *ngFor="let option of packs[stack.ecosystem].options">
+                        <span class="group-label col-xs-4">{{option.displayName}}</span>
+                        <span class="group-input col-xs-8">
+                            <input type="text" value="" [(ngModel)]="stack[option.displayName]" />
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="steps">
+        <h3>Step 3:</h3>
+        <div class="step-info-container">
+            <div class="step-information col-xs-6">
+                <h4>Dependencies</h4>
+                <p>Type and select dependencies</p>
+                <div class="group-information">
+                    <typeahead-dependency (onTypeAhead)="handleSearch($event)"></typeahead-dependency>
+                </div>
+            </div>
+            <div *ngIf="pickedSuggestions && pickedSuggestions.length > 0" class="step-information col-xs-6">
+                <h4>Selected Dependencies</h4>
+                <div class="selected-dependencies">
+                    <span *ngFor="let suggestion of pickedSuggestions">{{suggestion}}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

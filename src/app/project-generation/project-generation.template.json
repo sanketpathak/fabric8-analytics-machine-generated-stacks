@@ -1,0 +1,20 @@
+// JSON for the first cut
+{
+    "ecosystem": "maven",
+    "framework": "springboot or null",
+    "version": "null or 1.2.1",
+    "project": {
+        "name": "project1",
+        "description": "sample description",
+        "options": {
+            "group": "group name",
+            "artifactId": "Id of artifact",
+            "version": "vesion number"
+        }
+    },
+    "dependencies": [
+        "selected dependency 1",
+        "selected dependency 2",
+        "selected dependency 3"
+    ]
+}
