@@ -63,13 +63,6 @@ $placeholderColor: #ccc;
                 }
                 .selected-dependencies {
                     padding: 10px;
-
-                    & > span {
-                        padding: 5px 15px 5px 15px;
-                        border: 1px solid #ccc;
-                        margin: 0 5px;
-                        border-radius: 10px;
-                    }
                 }
             }
         }

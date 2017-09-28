@@ -17,7 +17,7 @@ export class ProjectGenerationComponent implements OnInit {
     public currentVersions: Array<any> = [];
     public frameworkStructure: any;
     public pickedSuggestions: Array<string> = [];
-    public componentAnalysis: any;
+    
     public packs: any = {
         maven: {
             name: 'maven',

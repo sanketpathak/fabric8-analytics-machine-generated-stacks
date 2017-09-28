@@ -81,7 +81,7 @@
             <div *ngIf="pickedSuggestions && pickedSuggestions.length > 0" class="step-information col-xs-6">
                 <h4>Selected Dependencies</h4>
                 <div class="selected-dependencies">
-                    <span (click)="showComponentAnalysis(suggestion)" *ngFor="let suggestion of pickedSuggestions">{{suggestion.name}}</span>
+                    <component-analysis [component]="suggestion" *ngFor="let suggestion of pickedSuggestions"></component-analysis>
                 </div>
             </div>
         </div>
