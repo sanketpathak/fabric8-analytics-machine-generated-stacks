@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 
+import { ProjectGenerationService } from './project-generation.service';
+
 @Component({
     selector: 'project-generation',
     templateUrl: './project-generation.component.html',
-    styleUrls: ['./project-generation.component.scss']
+    styleUrls: ['./project-generation.component.scss'],
+    providers: [ProjectGenerationService]
 })
 
 export class ProjectGenerationComponent implements OnInit {
@@ -14,6 +17,7 @@ export class ProjectGenerationComponent implements OnInit {
     public currentVersions: Array<any> = [];
     public frameworkStructure: any;
     public pickedSuggestions: Array<string> = [];
+    public componentAnalysis: any;
     public packs: any = {
         maven: {
             name: 'maven',
@@ -60,6 +64,8 @@ export class ProjectGenerationComponent implements OnInit {
             }]
         }
     };
+
+    constructor(private projectGenerationService: ProjectGenerationService) {}
 
     public onManifestChange(): void {
         console.log(this.stack.ecosystem);
@@ -119,5 +125,22 @@ export class ProjectGenerationComponent implements OnInit {
 
     public showComponentAnalysis(component: any): void {
         console.log(component);
+        this    .projectGenerationService
+                .getComponentAnalysis(component)
+                .subscribe(response => {
+                    if (response) {
+                        console.log(response);
+                        let pack: any = response.data[0].package;
+                        let github: any = {};
+                        github['forks'] = pack['gh_forks'][0];
+                        github['issues'] = pack['gh_open_issues_count'][0];
+                        github['stars'] = pack['gh_stargazers'][0];
+                        github['subscribes'] = pack['gh_subscribers_count'][0];
+
+                        this.componentAnalysis['github'] = github;
+                        this.componentAnalysis['latest_version'] = pack['latest_version'][0];
+                        this.componentAnalysis['tokens'] = pack['tokens'];
+                    }
+                });
     }
 }
