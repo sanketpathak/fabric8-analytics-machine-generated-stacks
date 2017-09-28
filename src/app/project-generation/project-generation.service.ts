@@ -7,7 +7,7 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 
-export class TypeAheadDependencyService {
+export class ProjectGenerationService {
     public service: Observable<any>;
     private headers: Headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
     
@@ -20,44 +20,13 @@ export class TypeAheadDependencyService {
         }
     }
 
-    getMatchingDependencies(searchKey: string): Observable<any> {
+    getComponentAnalysis(component: any): Observable<any> {
         let options = new RequestOptions({ headers: this.headers });
-        let url: string = 'https://recommender.api.openshift.io/api/v1/component-search/' + searchKey;
+        let url: string = `https://recommender.api.openshift.io/api/v1/component-analyses/${component.ecosystem}/${component.name}/${component.version}`;
         this.service = this    .http
                                 .get(url, options)
                                 .map(this.extractData)
                                 .catch(this.handleError);
-
-
-        // let postData: any = {
-        //     "ecosystem": "maven",
-        //     "framework": "springboot or null",
-        //     "version": "null or 1.2.1",
-        //     "project": {
-        //         "name": "project1",
-        //         "description": "sample description",
-        //         "options": {
-        //             "group": "group name",
-        //             "artifactId": "Id of artifact",
-        //             "version": "vesion number"
-        //         }
-        //     },
-        //     "dependencies": [
-        //         "selected dependency 1",
-        //         "selected dependency 2",
-        //         "selected dependency 3"
-        //     ]
-        // };
-
-        // let url: string = 'http://10.209.69.58:5000/generatefile';
-        // this.headers.set('Accept', 'application/json');
-        // let options = new RequestOptions({ headers: this.headers });
-        // let body: any = JSON.stringify(postData);
-        // this.service = this    .http
-        //                         .post(url, body, options)
-        //                         .map(this.extractData)
-        //                         .catch(this.handleError);
-
 
         return this.service;
     }

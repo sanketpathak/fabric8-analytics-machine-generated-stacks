@@ -4,9 +4,12 @@
         <button class="btn btn-default float-left" type="button"><span class="fa fa-search"></span></button>
     </div>
     <div *ngIf="suggestions && suggestions.length > 0 || isLoading" class="suggestions">
+        <span (click)="suggestions = []; isLoading = false" class="close-container">
+            <span class="pficon-close"></span>
+        </span>
         <div *ngIf="isLoading" class="spinner"></div>
         <div #sug (click)="handleSuggestionClick(suggestion, sug)" *ngFor="let suggestion of suggestions">
-            {{suggestion}}
+            {{suggestion.name}}
         </div>
     </div>
 </section>

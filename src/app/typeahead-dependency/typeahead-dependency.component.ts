@@ -27,19 +27,29 @@ export class TypeAheadDependencyComponent {
                                         .getMatchingDependencies(this.userSearch)
                                         .subscribe(result => {
                                             console.log(result);
+                                            this.isLoading = false;
+                                            if (result) {
+                                                let response: Array<any> = result.result;
+                                                this.suggestions = [];
+                                                if (response && response.length > 0) {
+                                                    // this.suggestions = Array.from(new Set(response.map(r => r.name)));
+                                                    this.suggestions = response;
+                                                }
+                                            }
                                         });
     }
 
     public handleSearch(): void {
         console.log(this.userSearch);
         this.isLoading = true;
-        setTimeout(() => {
-            this.suggestions = ['sugg1', 'sugg2', 'sugg3'];
-            this.isLoading = false;
-        }, 3000);
+        // setTimeout(() => {
+        //     this.suggestions = ['sugg1', 'sugg2', 'sugg3'];
+        //     this.isLoading = false;
+        // }, 3000);
+        this.onInputChange();
     }
 
-    public handleSuggestionClick(suggestion: string, element: Element): void {
+    public handleSuggestionClick(suggestion: any, element: Element): void {
         console.log(suggestion);
         console.log(element);
         let output: any = {};

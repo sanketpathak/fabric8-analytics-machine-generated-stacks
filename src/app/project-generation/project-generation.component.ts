@@ -116,4 +116,8 @@ export class ProjectGenerationComponent implements OnInit {
             }
         }
     }
+
+    public showComponentAnalysis(component: any): void {
+        console.log(component);
+    }
 }
