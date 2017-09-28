@@ -10,7 +10,7 @@ import 'rxjs/add/operator/map';
 export class ProjectGenerationService {
     public service: Observable<any>;
     private headers: Headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
-    
+
     constructor(
         private http: Http,
         private auth: AuthenticationService,
@@ -29,6 +29,39 @@ export class ProjectGenerationService {
                                 .catch(this.handleError);
 
         return this.service;
+    }
+
+    postJSON() {
+        let postData: any = {
+            "ecosystem": "maven",
+            "framework": "springboot or null",
+            "version": "null or 1.2.1",
+            "project": {
+                "name": "project1",
+                "description": "sample description",
+                "options": {
+                    "group": "group name",
+                    "artifactId": "Id of artifact",
+                    "version": "vesion number"
+                }
+            },
+            "dependencies": [
+                "selected dependency 1",
+                "selected dependency 2",
+                "selected dependency 3"
+            ]
+        };
+        
+        this.headers.set('Accept', 'multipart/form-data');
+        let options = new RequestOptions({ headers: this.headers });
+        let body: any = JSON.stringify(postData);
+        let url: string = '';
+        this.service = this     .http
+                                .post(url, body, options)
+                                .map(this.extractData)
+                                .catch(this.handleError);
+
+        return this.service; 
     }
 
     private extractData(res: Response) {

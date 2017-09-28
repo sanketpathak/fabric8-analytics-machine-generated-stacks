@@ -143,4 +143,11 @@ export class ProjectGenerationComponent implements OnInit {
                     }
                 });
     }
+    public postJSON(){
+        this    .projectGenerationService
+                .postJSON()
+                .subscribe(response => {
+                    console.log(response);  
+                });
+    }
 }
