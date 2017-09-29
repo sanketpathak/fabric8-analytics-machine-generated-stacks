@@ -72,7 +72,7 @@ export class ProjectGenerationService {
         this.headers.set('Accept', 'multipart/form-data');
         let options = new RequestOptions({ headers: this.headers });
         let body: any = JSON.stringify(postData);
-        let url: string = 'http://10.209.69.58:5000/generatefile';
+        let url: string = 'http://generate-manifest-generate-manifest.dev.rdu2c.fabric8.io/generatefile';
         this.service = this     .http
                                 .post(url, body, options)
                                 .map((response: any) => {
