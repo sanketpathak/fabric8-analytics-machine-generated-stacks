@@ -9,7 +9,8 @@
         </span>
         <div *ngIf="isLoading" class="spinner"></div>
         <div #sug (click)="handleSuggestionClick(suggestion, sug)" *ngFor="let suggestion of suggestions">
-            {{suggestion.name}}
+            <span class="package">{{suggestion.name}}</span>
+            <span class="version">{{suggestion.version}}</span>
         </div>
     </div>
 </section>

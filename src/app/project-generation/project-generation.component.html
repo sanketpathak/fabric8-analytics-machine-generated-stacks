@@ -47,13 +47,13 @@
                 <div class="group-information">
                     <span class="group-label col-xs-4">Project Name</span>
                     <span class="group-input col-xs-8">
-                        <input type="text" value="" placeholder="Example Project" [(ngModel)]="stack.name" />
+                        <input type="text" value="" placeholder="Example Project" [(ngModel)]="stack['project'].name" />
                     </span>
                 </div>
                 <div class="group-information">
                     <span class="group-label col-xs-4">Project Description</span>
                     <span class="group-input col-xs-8">
-                        <textarea placeholder="Sample Description" [(ngModel)]="stack.description"></textarea>
+                        <textarea placeholder="Sample Description" [(ngModel)]="stack['project'].description"></textarea>
                     </span>
                 </div>
             </div>
@@ -62,7 +62,7 @@
                     <div class="group-information" *ngFor="let option of packs[stack.ecosystem].options">
                         <span class="group-label col-xs-4">{{option.displayName}}</span>
                         <span class="group-input col-xs-8">
-                            <input type="text" value="" [placeholder]="option.placeholder" [(ngModel)]="stack[option.displayName]" />
+                            <input type="text" value="" [placeholder]="option.placeholder" [(ngModel)]="stack['project']['options'][option.name]" />
                         </span>
                     </div>
                 </div>
@@ -75,13 +75,25 @@
             <div class="step-information col-xs-6">
                 <h4>Dependencies</h4>
                 <div class="group-information">
-                    <typeahead-dependency (onTypeAhead)="handleSearch($event)"></typeahead-dependency>
+                    <typeahead-dependency [selectedEcosystem]="stack.ecosystem" (onTypeAhead)="handleSearch($event)"></typeahead-dependency>
                 </div>
             </div>
             <div *ngIf="pickedSuggestions && pickedSuggestions.length > 0" class="step-information col-xs-6">
                 <h4>Selected Dependencies</h4>
                 <div class="selected-dependencies">
-                    <component-analysis [component]="suggestion" *ngFor="let suggestion of pickedSuggestions"></component-analysis>
+                    <component-analysis (onOut)="showDetail = false" (onAnalyze)="handleAnalyze($event)" [component]="suggestion" *ngFor="let suggestion of pickedSuggestions"></component-analysis>
+                </div>
+                <div class="component-analysis" [ngStyle]="{'top': compConfig.offset.top, 'left': compConfig.offset.left}" *ngIf="showDetail">
+                    <div class="component-information">
+                        <p>Github</p>
+                        <span class="info-item">Forks: {{componentAnalysis['github'].forks}}</span>
+                        <span class="info-item">Stars: {{componentAnalysis['github'].stars}}</span>
+                        <span class="info-item">Issues: {{componentAnalysis['github'].issues}}</span>
+                        <span class="info-item">Subscribes: {{componentAnalysis['github'].subscribes}}</span>
+                        <p>Latest Version: {{componentAnalysis.latest_version}}</p>
+                        <p>Categories</p>
+                        <span *ngFor="let token of componentAnalysis.tokens" class="info-item">{{token}}</span>
+                    </div>
                 </div>
             </div>
         </div>

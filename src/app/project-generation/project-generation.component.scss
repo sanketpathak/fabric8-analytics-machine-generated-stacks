@@ -77,4 +77,38 @@ $placeholderColor: #ccc;
         padding : 15px 32px;
         text-align: center;
     }
+    .component-analysis {
+        position: absolute;
+
+        .component-information {
+            padding: 10px;
+            box-shadow: 1px 1px 1px 1px #ededed;
+            background: #000;
+            color: #fff;
+            &:before {
+                content: '';
+                width: 10px;
+                height: 10px;
+                background: #000;
+                display: inline-block;
+                top: -5px;
+                left: 20px;
+                position: absolute;
+                transform: rotate(45deg);
+            }
+
+            p {
+                font-weight: 100;
+                font-size: 15px;
+            }
+
+            .info-item {
+                padding: 5px;
+                background: #fff;
+                margin: 5px;
+                color: #000;
+                display: inline-block;
+            }
+        }
+    }
 }

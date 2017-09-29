@@ -11,12 +11,20 @@ import { ProjectGenerationService } from './project-generation.service';
 
 export class ProjectGenerationComponent implements OnInit {
     public header: string = 'Generate your project stack';
-    public stack: any = {};
+    public showDetail: boolean = false;
+    public componentAnalysis: any;
+    public compConfig: any;
+    public stack: any = {
+        project: {
+            options: {}
+        },
+        dependencies: []
+    };
     public manifests: Array<string> = [];
     public currentFrameworks: Array<any> = [];
     public currentVersions: Array<any> = [];
     public frameworkStructure: any;
-    public pickedSuggestions: Array<string> = [];
+    public pickedSuggestions: Array<any> = [];
     
     public packs: any = {
         maven: {
@@ -31,7 +39,7 @@ export class ProjectGenerationComponent implements OnInit {
                 displayName: 'Artifact Id',
                 placeholder: 'commons-example'
             }, {
-                name: 'groupVersion',
+                name: 'version',
                 displayName: 'Project Version',
                 placeholder: '1.0.0'
             }],
@@ -123,31 +131,30 @@ export class ProjectGenerationComponent implements OnInit {
         }
     }
 
-    public showComponentAnalysis(component: any): void {
-        console.log(component);
-        this    .projectGenerationService
-                .getComponentAnalysis(component)
-                .subscribe(response => {
-                    if (response) {
-                        console.log(response);
-                        let pack: any = response.data[0].package;
-                        let github: any = {};
-                        github['forks'] = pack['gh_forks'][0];
-                        github['issues'] = pack['gh_open_issues_count'][0];
-                        github['stars'] = pack['gh_stargazers'][0];
-                        github['subscribes'] = pack['gh_subscribers_count'][0];
-
-                        this.componentAnalysis['github'] = github;
-                        this.componentAnalysis['latest_version'] = pack['latest_version'][0];
-                        this.componentAnalysis['tokens'] = pack['tokens'];
-                    }
-                });
+    public handleAnalyze(result: any): void {
+        console.log(result);
+        this.showDetail = true;
+        this.componentAnalysis = result.content;
+        let ref: any = result.ref;
+        this.compConfig = {
+            offset: {
+                top: ref.offsetTop + 30 + 'px',
+                left: ref.offsetLeft + (ref.offsetWidth / 2) - 10 + 'px'
+            }
+        };
     }
-    public postJSON(){
-        this    .projectGenerationService
-                .postJSON()
-                .subscribe(response => {
-                    console.log(response);  
-                });
+
+    public postJSON() {
+        console.log(this.stack);
+        this.pickedSuggestions.forEach(suggestion => {
+            this.stack.dependencies.push(suggestion.name);
+        });
+        if (this.stack) {
+            this    .projectGenerationService
+                    .postJSON()
+                    .subscribe(response => {
+                        console.log(response);
+                    });
+        }
     }
 }

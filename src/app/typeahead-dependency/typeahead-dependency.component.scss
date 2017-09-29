@@ -15,13 +15,15 @@ $white: #fff;
     }
     .suggestions {
         background: #fff;
+        width: 500px;
+        position: relative;
 
         .close-container {
-            right: 0;
+            right: -21px;
             position: absolute;
             display: inline-block;
             padding: 5px 6px;
-            background: $white;
+            background: #fff;
             cursor: pointer;
 
             &:hover {
@@ -32,9 +34,26 @@ $white: #fff;
 
         & > div {
             padding: 10px;
+            position: relative;
             &:hover, &.clicked-suggestion {
                 background: $patternfly-blue;
                 color: $white;
+                cursor: pointer;
+            }
+            .package {
+                float: left;
+                font-weight: bold;
+            }
+            .version {
+                float: right;
+                right: 10px;
+                position: relative;
+            }
+            &:after {
+                content: '';
+                display: block;
+                float: none;
+                clear: both;
             }
         }
     }

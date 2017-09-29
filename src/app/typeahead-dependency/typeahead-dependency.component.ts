@@ -1,4 +1,4 @@
-import { Component, Output, OnChanges, EventEmitter } from '@angular/core';
+import { Component, Input, Output, OnChanges, EventEmitter } from '@angular/core';
 import { TypeAheadDependencyService } from './typeahead-dependency.service';
 import { Subscription } from 'rxjs/Subscription';
 
@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 })
 
 export class TypeAheadDependencyComponent {
+    @Input('selectedEcosystem') ecosystem;
     @Output() onTypeAhead = new EventEmitter();
 
     public userSearch: string;
@@ -23,6 +24,7 @@ export class TypeAheadDependencyComponent {
         if (this.subscription) {
             this.subscription.unsubscribe();
         }
+        this.suggestions = [];
         this.subscription = this   .typeAheadDependencyService
                                         .getMatchingDependencies(this.userSearch)
                                         .subscribe(result => {
@@ -32,6 +34,7 @@ export class TypeAheadDependencyComponent {
                                                 let response: Array<any> = result.result;
                                                 this.suggestions = [];
                                                 if (response && response.length > 0) {
+                                                    response = response.filter(a => a.ecosystem === this.ecosystem);
                                                     // this.suggestions = Array.from(new Set(response.map(r => r.name)));
                                                     this.suggestions = response;
                                                 }
