@@ -151,7 +151,7 @@ export class ProjectGenerationComponent implements OnInit {
         });
         if (this.stack) {
             this    .projectGenerationService
-                    .postJSON()
+                    .postJSON(this.stack)
                     .subscribe(response => {
                         console.log(response);
                     });

@@ -5,6 +5,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 
+import { MockAuthenticationService } from '../shared/mock-auth.service';
+
 @Injectable()
 
 export class TypeAheadDependencyService {
@@ -14,15 +16,17 @@ export class TypeAheadDependencyService {
     constructor(
         private http: Http,
         private auth: AuthenticationService,
+        private stage: MockAuthenticationService
     ) {
         if (this.auth.getToken() !== null) {
             this.headers.set('Authorization', 'Bearer ' + this.auth.getToken());
         }
+        this.headers.set('Authorization', 'Bearer ' + this.stage.getStageToken());
     }
 
     getMatchingDependencies(searchKey: string): Observable<any> {
         let options = new RequestOptions({ headers: this.headers });
-        let url: string = 'https://recommender.api.openshift.io/api/v1/component-search/' + searchKey;
+        let url: string = 'http://bayesian-api-bayesian-preview.b6ff.rh-idev.openshiftapps.com/api/v1/component-search/' + searchKey;
         this.service = this    .http
                                 .get(url, options)
                                 .map(this.extractData)
