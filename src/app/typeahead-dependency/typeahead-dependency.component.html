@@ -8,7 +8,7 @@
             <span class="pficon-close"></span>
         </span>
         <div *ngIf="isLoading" class="spinner"></div>
-        <div #sug (click)="handleSuggestionClick(suggestion, sug)" *ngFor="let suggestion of suggestions">
+        <div #sug (mouseover)="showComponentAnalysis(suggestion, sug)" (click)="handleSuggestionClick(suggestion, sug)" *ngFor="let suggestion of suggestions">
             <span class="package">{{suggestion.name}}</span>
             <span class="version">{{suggestion.version}}</span>
         </div>

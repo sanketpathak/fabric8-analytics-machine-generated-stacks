@@ -75,7 +75,7 @@
             <div class="step-information col-xs-6">
                 <h4>Dependencies</h4>
                 <div class="group-information">
-                    <typeahead-dependency [selectedEcosystem]="stack.ecosystem" (onTypeAhead)="handleSearch($event)"></typeahead-dependency>
+                    <typeahead-dependency (onOut)="showDetail = false" (onAnalyze)="handleAnalyze($event)" [selectedEcosystem]="stack.ecosystem" (onTypeAhead)="handleSearch($event)"></typeahead-dependency>
                 </div>
             </div>
             <div *ngIf="pickedSuggestions && pickedSuggestions.length > 0" class="step-information col-xs-6">
