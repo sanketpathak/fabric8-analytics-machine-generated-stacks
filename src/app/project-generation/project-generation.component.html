@@ -76,6 +76,18 @@
                 <h4>Dependencies</h4>
                 <div class="group-information">
                     <typeahead-dependency (onOut)="showDetail = false" (onAnalyze)="handleAnalyze($event)" [selectedEcosystem]="stack.ecosystem" (onTypeAhead)="handleSearch($event)"></typeahead-dependency>
+                    <div class="component-analysis" [ngStyle]="{'top': compConfig.offset.top, 'left': compConfig.offset.left}" *ngIf="showDetail">
+                        <div class="component-information">
+                            <p>Github</p>
+                            <span class="info-item">Forks: {{componentAnalysis['github'].forks}}</span>
+                            <span class="info-item">Stars: {{componentAnalysis['github'].stars}}</span>
+                            <span class="info-item">Issues: {{componentAnalysis['github'].issues}}</span>
+                            <span class="info-item">Subscribes: {{componentAnalysis['github'].subscribes}}</span>
+                            <p>Latest Version: {{componentAnalysis.latest_version}}</p>
+                            <p>Categories</p>
+                            <span *ngFor="let token of componentAnalysis.tokens" class="info-item">{{token}}</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div *ngIf="pickedSuggestions && pickedSuggestions.length > 0" class="step-information col-xs-6">
