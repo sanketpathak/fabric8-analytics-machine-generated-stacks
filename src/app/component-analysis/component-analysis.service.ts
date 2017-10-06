@@ -9,22 +9,24 @@ import 'rxjs/add/operator/map';
 
 export class ComponentAnalysisService {
     public service: Observable<any>;
-    private headers: Headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
+    private headers: Headers = new Headers();
     
     constructor(
         private http: Http,
         private auth: AuthenticationService,
     ) {
         if (this.auth.getToken() !== null) {
-            this.headers.set('Authorization', 'Bearer ' + this.auth.getToken());
+            this.headers.append('Authorization', 'Bearer ' + this.auth.getToken());
         }
     }
 
     getComponentAnalysis(component: any): Observable<any> {
-        let options = new RequestOptions({ headers: this.headers });
+        // let options = new RequestOptions({ headers: this.headers });
         let url: string = `https://recommender.api.openshift.io/api/v1/component-analyses/${component.ecosystem}/${component.name}/${component.version}`;
         this.service = this    .http
-                                .get(url, options)
+                                .get(url, {
+                                    headers: this.headers
+                                })
                                 .map(this.extractData)
                                 .catch(this.handleError);
 
