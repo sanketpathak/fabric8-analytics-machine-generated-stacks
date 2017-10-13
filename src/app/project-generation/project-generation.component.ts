@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { ProjectGenerationService } from './project-generation.service';
 
@@ -10,6 +10,7 @@ import { ProjectGenerationService } from './project-generation.service';
 })
 
 export class ProjectGenerationComponent implements OnInit {
+    @ViewChild('compinfo') compinfo : any;
     public header: string = 'Generate your project stack';
     public showDetail: boolean = false;
     public componentAnalysis: any;
@@ -142,6 +143,9 @@ export class ProjectGenerationComponent implements OnInit {
                 left: ref.offsetLeft + (ref.offsetWidth / 2) - 10 + 'px'
             }
         };
+    }
+    public closeHover(){
+        this.showDetail = false;
     }
 
     public postJSON() {

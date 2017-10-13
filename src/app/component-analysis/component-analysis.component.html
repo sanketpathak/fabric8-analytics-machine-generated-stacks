@@ -1,1 +1,1 @@
-<span #comp (click)="showComponentAnalysis(component, comp)">{{component.name}}</span>
+<span #comp *ngIf="component" (click)="showComponentAnalysis(component, comp)">{{component.name}}<span (click)="component = null" class="pficon-close"></span></span>
