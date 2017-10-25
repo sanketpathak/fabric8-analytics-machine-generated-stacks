@@ -2,6 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 
 import { ComponentAnalysisService } from './component-analysis.service';
+import { TypeAheadDependencyComponent } from './typeahead-dependency/typeahead-dependency.component';
 
 @Component({
     selector: 'component-analysis',
@@ -14,10 +15,12 @@ export class ComponentAnalysisComponent {
     @Input('component') component;
     @Output() onAnalyze = new EventEmitter();
     @Output() onOut = new EventEmitter();
+    @Output() onCloseEmitter = new EventEmitter();
     private subscription: Subscription;
     public componentAnalysis: any = {};
     private cache: any = {};
     public showDetail: boolean = false;
+    public showOnScreen: boolean = true;
 
 
     constructor(private componentAnalysisService: ComponentAnalysisService) {}
@@ -25,7 +28,11 @@ export class ComponentAnalysisComponent {
     public handleMouseOut(): void {
         this.onOut.emit(true);
     }
-
+    public emitCloseEvent(element: Element): void {
+        this.showOnScreen = false;
+        console.log(this.showOnScreen);
+        this.onCloseEmitter.emit([this.component, element]);
+    }
     public showComponentAnalysis(component: any, comp: Element): void {
         if (this.component) {
             if (this.subscription) {

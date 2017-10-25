@@ -2,6 +2,11 @@ $placeholderColor: #ccc;
 .custom-header {
     height: 40px;
 }
+
+.validity {
+    color: red
+  }
+
 @mixin placeholder($color) {
     ::-webkit-input-placeholder { /* WebKit, Blink, Edge */
         color:    $color;
@@ -26,6 +31,9 @@ $placeholderColor: #ccc;
 .project-generation {
     padding: 20px;
 
+    .package-blocks {
+        display: inline-flex;
+    }
     .steps {
         margin: 20px 0 20px 0;
 
@@ -79,7 +87,7 @@ $placeholderColor: #ccc;
     }
     .component-analysis {
         position: absolute;
-        left: 300px;;
+        left: 500px;
 
         .component-information {
             padding: 10px;
