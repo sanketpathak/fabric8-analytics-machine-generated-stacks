@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { ProjectGenerationComponent } from './project-generation.component';
 import { TypeAheadDependencyModule } from '../typeahead-dependency/typeahead-dependency.module';
 import { ComponentAnalysisModule } from '../component-analysis/component-analysis.module';
-import { ErrorhandlerModule } from '../errorhandler/errorhandler.module';
+
 
 @NgModule({
     imports: [
@@ -13,7 +13,7 @@ import { ErrorhandlerModule } from '../errorhandler/errorhandler.module';
         FormsModule,
         TypeAheadDependencyModule,
         ComponentAnalysisModule,
-        ErrorhandlerModule
+        
     ],
     declarations: [ProjectGenerationComponent],
     exports: [ProjectGenerationComponent]

@@ -20,8 +20,14 @@ export class ComponentAnalysisService {
         }
     }
 
+    isValid(component: any): boolean {
+        debugger;
+        return component.ecosystem && component.name && component.version;
+    }
+
     getComponentAnalysis(component: any): Observable<any> {
         // let options = new RequestOptions({ headers: this.headers });
+        if (!this.isValid(component)) return null;
         let url: string = `https://recommender.api.openshift.io/api/v1/component-analyses/${component.ecosystem}/${component.name}/${component.version}`;
         this.service = this    .http
                                 .get(url, {
