@@ -21,7 +21,6 @@ export class ComponentAnalysisService {
     }
 
     isValid(component: any): boolean {
-        debugger;
         return component.ecosystem && component.name && component.version;
     }
 
