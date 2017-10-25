@@ -27,9 +27,8 @@ export class ProjectGenerationComponent implements OnInit {
     public frameworkStructure: any;
     public pickedSuggestions: Array<any> = [];
     public pickedElements: Array<any> = [];
-    public statusMessage : string ;
-    public isval : string ;    
-    //public RemovedComponent: String ;
+    public statusMessage: string ;
+    public isval: string;
     public packs: any = {
         maven: {
             name: 'maven',
@@ -108,8 +107,6 @@ export class ProjectGenerationComponent implements OnInit {
 
     ngOnInit(): void {
         this.manifests = Object.keys(this.packs);
-        debugger;
-        //let component : any ;
         let manifest: string = this.manifests[0];
         this.stack['ecosystem'] = manifest;
         this.stack['framework'] = null;
@@ -119,10 +116,6 @@ export class ProjectGenerationComponent implements OnInit {
             this.stack['framework'] = this.packs[manifest].frameworks[0].name;
             this.onFrameworkChange();
         }
-        this.projectGenerationService.getComponentAnalysis(Component)
-        .subscribe((errMsg) => {this.statusMessage = 'Problem with the service. Please try again later';
-        console.error(errMsg);
-        });
     }
 
     public handleSearch(result: any): void {
