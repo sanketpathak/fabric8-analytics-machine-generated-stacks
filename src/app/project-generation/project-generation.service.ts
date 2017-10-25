@@ -4,6 +4,7 @@ import { AuthenticationService } from 'ngx-login-client';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+//import 'rxjs/add/Observable/throw';
 
 @Injectable()
 
@@ -31,7 +32,7 @@ export class ProjectGenerationService {
         return this.service;
     }
 
-    testRoute(): void {
+ /*   testRoute(): void {
         let url: string = 'http://10.209.69.58:5000/test';
         let body: any = JSON.stringify({'name': 'Some Name'});
         
@@ -46,7 +47,7 @@ export class ProjectGenerationService {
                                 })
                                 .catch(this.handleError);
 
-    }
+    }*/
 
     postJSON(data: any) {
         
@@ -66,6 +67,20 @@ export class ProjectGenerationService {
                                     a.download = "pom.xml" ;
                                     document.body.appendChild(a);
                                     a.click();
+                                    if (response.success == 0) {
+                                        throw Observable.throw(response);  
+                                      }
+                                      
+                                   /* onsubmit(form)
+                                    {
+                                       this.submitted=true;
+                                 
+                                       console.log(form);
+                                       if(form.valid)    //<<<### submit form is it is valid only
+                                       {
+                                         console.log('form submitted');
+                                       }
+                                     }*/
                                     // window.open(url);
                                 })
                                 .catch(this.handleError);
@@ -92,5 +107,7 @@ export class ProjectGenerationService {
         }
         console.error(errMsg);
         return Observable.throw(errMsg);
+       
+        
     }
 }

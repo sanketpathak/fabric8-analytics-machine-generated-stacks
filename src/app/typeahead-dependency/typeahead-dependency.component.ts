@@ -2,6 +2,9 @@ import { Component, Input, Output, OnChanges, EventEmitter } from '@angular/core
 import { TypeAheadDependencyService } from './typeahead-dependency.service';
 import { ComponentAnalysisService } from '../component-analysis/component-analysis.service';
 import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable/*';
+//import { delay } from 'ngx-login-client/node_modules/rxjs/operator/delay';
+//import 'rxjs/operator/add/delay';
 
 @Component({
     selector: 'typeahead-dependency',
@@ -11,7 +14,9 @@ import { Subscription } from 'rxjs/Subscription';
 })
 
 export class TypeAheadDependencyComponent {
+  //  delay: any;
     @Input('selectedEcosystem') ecosystem;
+    //@Input('RemovedCmp') syssel;
     @Output() onTypeAhead = new EventEmitter();
 
     public userSearch: string;
@@ -69,7 +74,11 @@ export class TypeAheadDependencyComponent {
                                                         ref: comp
                                                     });
                                                 }
-                                                this.showDetail = true;
+                                                (data => 
+                                                    {
+                                                       // this.delay (4000)
+                                                       this.showDetail = true;
+                                                    });
                                             });
             }
         }
@@ -113,13 +122,15 @@ export class TypeAheadDependencyComponent {
         console.log(element);
         let output: any = {};
         output['suggestion'] = suggestion;
-        if (element.classList.contains('clicked-suggestion')) {
-            element.classList.remove('clicked-suggestion');
+        output['element'] = element;
+       /* if (output['element'].classList.contains('clicked-suggestion')) {
+            output['element'].classList.remove('clicked-suggestion');
             output['status'] = 'removed';
         } else {
-            element.classList.add('clicked-suggestion');
+            output['element'].classList.add('clicked-suggestion');
             output['status'] = 'added';
-        }
+        }*/
         this.onTypeAhead.emit(output);
     }
+
 }

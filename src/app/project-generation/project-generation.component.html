@@ -4,6 +4,7 @@
 
 <section class="project-generation">
     <h1>{{header}}</h1>
+        
     <div class="steps">
         <h3>Step 1:</h3>
         <div class="step-info-container">
@@ -47,7 +48,7 @@
                 <div class="group-information">
                     <span class="group-label col-xs-4">Project Name</span>
                     <span class="group-input col-xs-8">
-                        <input type="text" value="" placeholder="Example Project" [(ngModel)]="stack['project'].name" />
+                        <input type="text" value="" placeholder="Example Project" [(ngModel)]="stack['project'].name" required ng-required="true"/>
                     </span>
                 </div>
                 <div class="group-information">
@@ -67,6 +68,14 @@
                     </div>
                 </div>
             </div>
+           <!-- <div class="errors">
+                    <span >
+                            <span ng-message="Example Project">Project Name is Required.</span>
+                            <span ng-message="Sample Description">Project Description is Required.</span>
+                            <span ng-message="option.placeholder">Fields should not be empty</span>
+                            
+                          </span>
+            </div>-->
         </div>
     </div>
     <div class="steps">
@@ -75,7 +84,7 @@
             <div class="step-information col-xs-6">
                 <h4>Dependencies</h4>
                 <div class="group-information">
-                    <typeahead-dependency #compinfo (mouseleave)="closeHover()" (onOut)="showDetail = false" (onAnalyze)="handleAnalyze($event)" [selectedEcosystem]="stack.ecosystem" (onTypeAhead)="handleSearch($event)"></typeahead-dependency>
+                    <typeahead-dependency #compinfo (mouseleave)="closeHover()" (onOut)="showDetail = false" (onAnalyze)="handleAnalyze($event)" [selectedEcosystem]="stack.ecosystem" (onTypeAhead)="handleSearch($event)" ></typeahead-dependency>
                     <div   class="component-analysis" [ngStyle]="{'top': compConfig.offset.top, 'left': compConfig.offset.left}" *ngIf="showDetail">
                         <div class="component-information">
                             <p>Github</p>
@@ -93,7 +102,7 @@
             <div *ngIf="pickedSuggestions && pickedSuggestions.length > 0" class="step-information col-xs-6">
                 <h4>Selected Dependencies</h4>
                 <div class="selected-dependencies">
-                    <component-analysis (onOut)="showDetail = false" (onAnalyze)="($event)" [component]="suggestion" *ngFor="let suggestion of pickedSuggestions"></component-analysis>
+                    <component-analysis class="package-blocks" (onOut)="showDetail = false" (onAnalyze)="($event)" [component]="suggestion" (onCloseEmitter)="handleClose($event)" *ngFor="let suggestion of pickedSuggestions"></component-analysis>
                     <div *ngIf="false"  class="component-analysis" [ngStyle]="{'top': compConfig.offset.top, 'left': compConfig.offset.left}">
                         <div class="component-information">
                             <p>Github</p>
@@ -111,6 +120,16 @@
             </div>
         </div>
     </div>
+    
+
+    <div *ngIf="errMsg" class="alert alert-danger"> 
+        {{ statusMessage }} 
+    </div>
+    <div *ngIf="errMsg" class="alert alert-danger">
+    </div>
+<div class="validity">
+    {{isval}}
+</div>
     <!-- Action buttons -->
 
     <div class="action-buttons">

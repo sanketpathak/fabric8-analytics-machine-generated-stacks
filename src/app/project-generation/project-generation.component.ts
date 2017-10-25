@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-
 import { ProjectGenerationService } from './project-generation.service';
 
 @Component({
@@ -10,6 +9,7 @@ import { ProjectGenerationService } from './project-generation.service';
 })
 
 export class ProjectGenerationComponent implements OnInit {
+    [x: string]: any;
     @ViewChild('compinfo') compinfo : any;
     public header: string = 'Generate your project stack';
     public showDetail: boolean = false;
@@ -26,7 +26,10 @@ export class ProjectGenerationComponent implements OnInit {
     public currentVersions: Array<any> = [];
     public frameworkStructure: any;
     public pickedSuggestions: Array<any> = [];
-    
+    public pickedElements: Array<any> = [];
+    public statusMessage : string ;
+    public isval : string ;    
+    //public RemovedComponent: String ;
     public packs: any = {
         maven: {
             name: 'maven',
@@ -106,6 +109,7 @@ export class ProjectGenerationComponent implements OnInit {
     ngOnInit(): void {
         this.manifests = Object.keys(this.packs);
         debugger;
+        //let component : any ;
         let manifest: string = this.manifests[0];
         this.stack['ecosystem'] = manifest;
         this.stack['framework'] = null;
@@ -115,14 +119,26 @@ export class ProjectGenerationComponent implements OnInit {
             this.stack['framework'] = this.packs[manifest].frameworks[0].name;
             this.onFrameworkChange();
         }
+        this.projectGenerationService.getComponentAnalysis(Component)
+        .subscribe((errMsg) => {this.statusMessage = 'Problem with the service. Please try again later';
+        console.error(errMsg);
+        });
     }
 
     public handleSearch(result: any): void {
         console.log(result);
         if (result) {
+            if (result['element'].classList.contains('clicked-suggestion')) {
+                result['element'].classList.remove('clicked-suggestion');
+                result['status'] = 'removed';
+            } else {
+                result['element'].classList.add('clicked-suggestion');
+                result['status'] = 'added';
+            }
             let suggestion: string = result.suggestion;
             if (result.status === 'added') {
                 this.pickedSuggestions.push(suggestion);
+                this.pickedElements.push(result.element);
             } else if (result.status === 'removed') {
                 let index: number = this.pickedSuggestions.indexOf(suggestion);
                 if (index !== -1) {
@@ -145,7 +161,41 @@ export class ProjectGenerationComponent implements OnInit {
         };
     }
     public closeHover(){
-        this.showDetail = false;
+        setTimeout(() => this.showDetail = false, 500);
+    }
+
+    private isValid(value: any): boolean {
+        return (value !== null && value !== undefined && value.trim() !== '') ;
+    }
+
+    public validateStack(): boolean {
+        let retval = false;
+        this.isval = 'Name Cant be Empty, please provide a valid project Name';   
+        this.getid();                      
+        if(this.isValid(this.stack.project.name)) {
+            this.isval = "";
+            retval = true;
+        }
+        console.log(retval);
+        return retval;
+    }
+    get isvalu() {
+        return this.isval;
+      }
+    
+
+    private newFunction() {
+        this.stack.forEach(element => {
+            this.isValid(this.stack.element)
+       });
+    }
+
+    getid(){
+        var keys = Object.keys(this.stack);
+        debugger;
+        keys.forEach((key) => { 
+            console.log(this.stack[key]);
+        });
     }
 
     public postJSON() {
@@ -153,12 +203,41 @@ export class ProjectGenerationComponent implements OnInit {
         this.pickedSuggestions.forEach(suggestion => {
             this.stack.dependencies.push(suggestion.name);
         });
-        if (this.stack) {
+        if (this.stack && this.validateStack()) {
             this    .projectGenerationService
                     .postJSON(this.stack)
                     .subscribe(response => {
                         console.log(response);
-                    });
+                    },
+                    
+                );
         }
     }
+
+    /**
+     * checkEquality
+     */
+    public checkEquality(c1, c2) {
+        return c1.ecosystem === c2.ecosystem && c1.name === c2.name && c1.version === c2.version;
+    }
+      
+    public handleClose(result: any): void {
+        console.log(result);
+        let closedElement = this.pickedSuggestions.filter(el => this.checkEquality(el, result[0]));
+
+        if(closedElement.length > 0) {
+            console.log(this.pickedSuggestions.indexOf(closedElement[0]), closedElement);
+            console.log(this.pickedElements, this.pickedElements[this.pickedSuggestions.indexOf(closedElement[0])].classList);
+            this.pickedElements[this.pickedSuggestions.indexOf(closedElement[0])].classList.remove('clicked-suggestion');
+            closedElement[0]['status'] = 'removed';
+            //this.RemovedComponent = closedElement[0];
+        }
+        //let ind = this.pickedSuggestions.map(el => el.name).indexOf(result);
+        //console.log(this.pickedSuggestions, ind);
+        //if(ind !== -1) {
+            //this.pickedSuggestions[ind].classList.remove('clicked-suggestion');
+        //    this.pickedSuggestions.splice(ind, 1);
+        //}
+    }
 }
+
