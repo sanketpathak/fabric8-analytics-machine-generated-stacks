@@ -46,30 +46,33 @@ export class ComponentAnalysisComponent {
                     ref: comp
                 });
             } else {
-                this.subscription = this    .componentAnalysisService
-                                            .getComponentAnalysis(this.component)
-                                            .subscribe(response => {
-                                                if (response) {
-                                                    console.log(response);
-                                                    debugger;
-                                                    let pack: any = response.result.data[0].package;
-                                                    let github: any = {};
-                                                    github['forks'] = pack['gh_forks'] ? pack['gh_forks'][0] : 'NA';
-                                                    github['issues'] = pack['gh_open_issues_count'] ? pack['gh_open_issues_count'][0] : 'NA';
-                                                    github['stars'] = pack['gh_stargazers'] ? pack['gh_stargazers'][0] : 'NA';
-                                                    github['subscribes'] = pack['gh_subscribers_count'] ? pack['gh_subscribers_count'][0] : 'NA';
+                let observable: any = this    .componentAnalysisService
+                                                .getComponentAnalysis(this.component);
+                
+                if (observable) {
+                    this.subscription = observable.subscribe(response => {
+                        if (response) {
+                            console.log(response);
+                            debugger;
+                            let pack: any = response.result.data[0].package;
+                            let github: any = {};
+                            github['forks'] = pack['gh_forks'] ? pack['gh_forks'][0] : 'NA';
+                            github['issues'] = pack['gh_open_issues_count'] ? pack['gh_open_issues_count'][0] : 'NA';
+                            github['stars'] = pack['gh_stargazers'] ? pack['gh_stargazers'][0] : 'NA';
+                            github['subscribes'] = pack['gh_subscribers_count'] ? pack['gh_subscribers_count'][0] : 'NA';
 
-                                                    this.componentAnalysis['github'] = github;
-                                                    this.componentAnalysis['latest_version'] = pack['latest_version'] ? pack['latest_version'][0] : 'NA';
-                                                    this.componentAnalysis['tokens'] = pack['tokens'];
-                                                    this.cache[this.component.name] = this.componentAnalysis;
-                                                    this.onAnalyze.emit({
-                                                        content: this.componentAnalysis,
-                                                        ref: comp
-                                                    });
-                                                }
-                                                this.showDetail = true;
-                                            });
+                            this.componentAnalysis['github'] = github;
+                            this.componentAnalysis['latest_version'] = pack['latest_version'] ? pack['latest_version'][0] : 'NA';
+                            this.componentAnalysis['tokens'] = pack['tokens'];
+                            this.cache[this.component.name] = this.componentAnalysis;
+                            this.onAnalyze.emit({
+                                content: this.componentAnalysis,
+                                ref: comp
+                            });
+                        }
+                        this.showDetail = true;
+                    });
+                }
             }
         }
     }
