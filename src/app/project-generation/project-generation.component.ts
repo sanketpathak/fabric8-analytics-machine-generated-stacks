@@ -9,7 +9,7 @@ import { ProjectGenerationService } from './project-generation.service';
 })
 
 export class ProjectGenerationComponent implements OnInit {
-    [x: string]: any;
+//    [x: string]: any;
     @ViewChild('compinfo') compinfo : any;
     public header: string = 'Generate your project stack';
     public showDetail: boolean = false;
